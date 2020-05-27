@@ -15,6 +15,7 @@
     <logback.version>1.2.3</logback.version>
     <surefire.version>3.0.0-M4</surefire.version>
     <assembler.version>3.1.0</assembler.version>
+    <mockito.version>2.23.4</mockito.version>
   </properties>
 
   <dependencies>
@@ -26,6 +27,14 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <!-- Mockito -->
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <!-- Junit -->
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit.version}</version>
@@ -61,7 +70,32 @@
 
   <build>
     <plugins>
+      <!-- Spotbugs static analysis tool -->
       <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.0.0</version>
+        <configuration>
+          <effort>Max</effort>
+          <threshold>Low</threshold>
+          <xmlOutput>true</xmlOutput>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs</artifactId>
+            <version>4.0.0</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    <plugin>
         <!-- executes junit tests -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
