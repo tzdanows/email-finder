@@ -13,6 +13,7 @@
     <junit.version>5.6.1</junit.version>
     <platform.version>1.6.1</platform.version>
     <logback.version>1.2.3</logback.version>
+    <cucumber.version>5.6.0</cucumber.version>
     <surefire.version>3.0.0-M4</surefire.version>
     <assembler.version>3.1.0</assembler.version>
     <mockito.version>2.23.4</mockito.version>
@@ -23,7 +24,13 @@
       <!-- Cucumber.io -->
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-java</artifactId>
-      <version>5.6.0</version>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>${cucumber.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -79,6 +86,7 @@
           <effort>Max</effort>
           <threshold>Low</threshold>
           <xmlOutput>true</xmlOutput>
+          <failOnError>false</failOnError>
         </configuration>
         <executions>
           <execution>
@@ -121,30 +129,23 @@
         </execution>
         </executions>
       </plugin>
+      <!-- Produces 2 kinds of outputs:
+            1. a 'fat' jar which contains this app as well as its dependencies
+            2. a ZIP file containing the source code-->
       <plugin>
-        <!-- Produces 2 kinds of outputs:
-             1. a 'fat' jar which contains this app as well as its dependencies
-             2. a ZIP file containing the source code
-        -->
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>${assembler.version}</version>
+        <version>3.1.0</version>
         <configuration>
           <finalName>email-finder</finalName>
           <appendAssemblyId>false</appendAssemblyId>
-          <descriptorRefs>
-            <descriptorRef>src</descriptorRef>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-          <archive>
-            <manifest>
-              <mainClass>edu.depaul.email.EmailFinder</mainClass>
-            </manifest>
-          </archive>
+          <descriptors>
+            <descriptor>src/assembly/assembly.xml</descriptor>
+          </descriptors>
         </configuration>
         <executions>
           <execution>
             <id>make-assembly</id>
-            <phase>package</phase>
+            <phase>verify</phase>
             <goals>
               <goal>single</goal>
             </goals>
