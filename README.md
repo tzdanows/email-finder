@@ -29,7 +29,3 @@ java -jar email-finder.jar http://cdm.depaul.edu
 1. StorageService class was added to encapulated storage details
 1. PageCrawler is now created with with 2 parameters: a StorageService and a maximum number of email addresses to find
 1. The main method of EmailFinder was refactored to provide a run() method for easier testing
-
-### TODO
-1. Make app stop sooner.  With max emails set to 50, it still finds 90 emails
-1. Clean up progress information
